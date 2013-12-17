@@ -1,0 +1,26 @@
+#!/bin/sh
+# chkconfig: 2345 95 20
+# description: jenkins
+# processname: jenkins
+
+SERVICE=/etc/init.d/<%= scope.lookupvar("jenkins::params::service") -%>-cluster
+DATADIR=<%= scope.lookupvar("jenkins::params::config_path") %>
+CHECK=<%= scope.lookupvar("jenkins::params::config_path") %>/jobs
+BACKUP=<%= scope.lookupvar("jenkins::params::prepare_cluster_backup") %>
+
+start(){
+    if [ \( ! -d $CHECK \) -a \( -f $BACKUP \) ]; then
+        chown <%= scope.lookupvar("jenkins::params::user") %>.<%= scope.lookupvar("jenkins::params::group") %> $DATADIR
+        tar xvf $BACKUP -C $DATADIR
+    fi
+    $SERVICE start
+}
+
+case "$1" in
+  start)
+        start
+        ;;
+  *)
+        $SERVICE $1
+        ;;
+esac
