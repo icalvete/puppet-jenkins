@@ -1,14 +1,19 @@
 class jenkins (
 
-  $repo_scheme   = $jenkins::params::repo_scheme,
-  $repo_domain   = $jenkins::params::repo_domain,
-  $repo_port     = $jenkins::params::repo_port,
-  $repo_user     = $jenkins::params::repo_user,
-  $repo_pass     = $jenkins::params::repo_pass,
-  $repo_path     = $jenkins::params::repo_path,
-  $repo_resource = $jenkins::params::package,
-  $cluster       = false,
-  $plugins       = $jenkins::params::plugins,
+  $repo_scheme     = $jenkins::params::repo_scheme,
+  $repo_domain     = $jenkins::params::repo_domain,
+  $repo_port       = $jenkins::params::repo_port,
+  $repo_user       = $jenkins::params::repo_user,
+  $repo_pass       = $jenkins::params::repo_pass,
+  $repo_path       = $jenkins::params::repo_path,
+  $repo_resource   = $jenkins::params::package,
+  $cluster         = false,
+  $plugins         = $jenkins::params::plugins,
+  $ldap            = false,
+  $ldap_host       = $jenkins::params::ldap_host,
+  $ldap_suffix     = $jenkins::params::ldap_suffix,
+  $ldap_admin_user = $jenkins::params::ldap_admin_user,
+  $ldap_admin_pass = $jenkins::params::ldap_admin_pass,
 
 ) inherits jenkins::params {
 

@@ -1,3 +1,4 @@
+<% encoded = Base64.encode64(@ldap_admin_pass)  -%>
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson>
   <disabledAdministrativeMonitors/>
@@ -62,7 +63,17 @@
     <permission>hudson.scm.SCM.Tag:jenkins</permission>
     <permission>hudson.scm.SCM.Tag:scm</permission>
   </authorizationStrategy>
-  <securityRealm class="hudson.security.LegacySecurityRealm"/>
+  <securityRealm class="hudson.security.LDAPSecurityRealm" plugin="ldap@1.6">
+  <server>ldap://<%= @ldap_host -%></server>
+    <rootDN><%= @ldap_suffix -%></rootDN>
+    <inhibitInferRootDN>false</inhibitInferRootDN>
+    <userSearchBase></userSearchBase>
+    <userSearch>uid={0}</userSearch>
+    <groupSearchBase></groupSearchBase>
+    <managerDN><%= @ldap_admin_user -%></managerDN>
+    <managerPassword><%= encoded.strip -%></managerPassword>
+    <disableMailAddressResolver>false</disableMailAddressResolver>
+  </securityRealm>
   <disableRememberMe>false</disableRememberMe>
   <projectNamingStrategy class="jenkins.model.ProjectNamingStrategy$DefaultProjectNamingStrategy"/>
   <workspaceDir>${ITEM_ROOTDIR}/workspace</workspaceDir>

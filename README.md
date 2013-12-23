@@ -10,6 +10,7 @@ See [Rundeck site](http://jenkins.org/)
 
 * [hiera](http://docs.puppetlabs.com/hiera/1/index.html)
 * https://github.com/icalvete/puppet-common 
+* For LDAP auth, administrator user is jenkins and only scm group members can do any stuff
 
 ##Authors:
 

@@ -12,6 +12,7 @@ class jenkins::config {
   }
 
   file{'jenkins_defaults_configuration':
+    ensure  => present,
     content => template("${module_name}/jenkins_defaults_${::osfamily}.erb"),
     path    => $jenkins::params::config_file_defaults,
     owner   => $jenkins::params::user,
@@ -19,8 +20,15 @@ class jenkins::config {
     mode    => '0644',
   }
 
+  if $jenkins::ldap {
+    $jenkins_configuration_file = "/jenkins_config_${::osfamily}_ldap.erb"
+  } else {
+    $jenkins_configuration_file = "/jenkins_config_${::osfamily}.erb"
+  }
+
   file{'jenkins_configuration':
-    content => template("${module_name}/jenkins_config_${::osfamily}.erb"),
+    ensure  => present,
+    content => template("${module_name}/${jenkins_configuration_file}"),
     path    => "${jenkins::params::config_path}/config.xml",
     owner   => $jenkins::params::user,
     group   => $jenkins::params::group,
@@ -34,6 +42,7 @@ class jenkins::config {
     }
 
     file {"/etc/init.d/${jenkins::params::service}":
+      ensure  => present,
       content => template("${module_name}/jenkins.init.erb"),
       owner   => 'root',
       group   => 'root',
