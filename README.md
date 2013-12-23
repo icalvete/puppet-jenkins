@@ -4,7 +4,7 @@ Puppet manifest to install and configure Jenkins
 
 [![Build Status](https://secure.travis-ci.org/icalvete/puppet-jenkins.png)](http://travis-ci.org/icalvete/puppet-jenkins)
 
-See [Rundeck site](http://jenkins.org/)
+See [Jenkins site](http://jenkins-ci.org/)
 
 ##Requires:
 
