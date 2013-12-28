@@ -35,6 +35,34 @@ class jenkins::config {
     mode    => '0644',
   }
 
+  if $jenkins::sonar {
+    include sonar::params
+
+    file {"${config_path}/sonar":
+        ensure  => directory,
+        owner   => $jenkins::params::user,
+        group   => $jenkins::params::group,
+    }
+
+    file{'sonar_runner_configuration':
+      ensure  => present,
+      content => template("${module_name}/hudson.plugins.sonar.SonarRunnerInstallation.xml.erb"),
+      path    => "${jenkins::params::config_path}/hudson.plugins.sonar.SonarRunnerInstallation.xml",
+      owner   => $jenkins::params::user,
+      group   => $jenkins::params::group,
+      mode    => '0644',
+    }
+
+    file{'sonar_configuration':
+      ensure  => present,
+      content => template("${module_name}/hudson.plugins.sonar.SonarPublisher.xml.erb"),
+      path    => "${jenkins::params::config_path}/hudson.plugins.sonar.SonarPublisher.xml",
+      owner   => $jenkins::params::user,
+      group   => $jenkins::params::group,
+      mode    => '0644',
+    }
+  }
+
   if $cluster {
     exec{'create-jenkins-cluster-initd':
       command => "/bin/mv /etc/init.d/${jenkins::params::service} /etc/init.d/${jenkins::params::service}-cluster",

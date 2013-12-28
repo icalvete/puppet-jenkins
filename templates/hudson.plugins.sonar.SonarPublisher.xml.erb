@@ -1,0 +1,23 @@
+<% encoded = Base64.encode64(scope.lookupvar("sonar::params::db_pass"))  -%>
+<?xml version='1.0' encoding='UTF-8'?>
+<hudson.plugins.sonar.SonarPublisher_-DescriptorImpl plugin="sonar@2.1">
+  <installations>
+    <hudson.plugins.sonar.SonarInstallation>
+      <name>Sonar</name>
+      <disabled>false</disabled>
+      <serverUrl></serverUrl>
+      <mojoVersion></mojoVersion>
+      <databaseUrl>jdbc:mysql://<%= scope.lookupvar("sonar::params::db_host") -%>:3306/<%= scope.lookupvar("sonar::params::db") -%>?useUnicode=true&amp;characterEncoding=utf8&amp;rewriteBatchedStatements=true</databaseUrl>
+      <databaseDriver>com.mysql.jdbc.Driver</databaseDriver>
+      <databaseLogin><%= scope.lookupvar("sonar::params::db_user") -%></databaseLogin>
+      <databasePassword><%= encoded.strip -%></databasePassword>
+      <additionalProperties></additionalProperties>
+      <triggers>
+        <skipScmCause>false</skipScmCause>
+        <skipUpstreamCause>false</skipUpstreamCause>
+        <envVar></envVar>
+      </triggers>
+      <sonarLogin></sonarLogin>
+    </hudson.plugins.sonar.SonarInstallation>
+  </installations>
+</hudson.plugins.sonar.SonarPublisher_-DescriptorImpl>

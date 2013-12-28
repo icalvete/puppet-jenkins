@@ -6,6 +6,7 @@ class jenkins::plugins {
   @jenkins::plugin { 'warnings': }
   @jenkins::plugin { 'htmlpublisher': }
   @jenkins::plugin { 'analysis-core': }
+  @jenkins::plugin { 'sonar': }
 
   if $jenkins::plugins != []{
     realize(Jenkins::Plugin[$jenkins::plugins])
