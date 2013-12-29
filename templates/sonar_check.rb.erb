@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+require "/var/lib/jenkins/sonar/sonarclient"
+
+sc = SonarClient.new()
+
+project = ENV['JOB_NAME']
+issues = sc.getIssues(project)
+
+if issues
+  num_errors = issues.count
+	if num_errors > 0
+    puts "Errors in code. See http://<%= scope.lookupvar("sonar::params::host") -%>:<%= scope.lookupvar("sonar::params::port") -%>/dashboard/index/#{project}"
+		exit 1
+	end
+else
+	puts "Error connecting to SonarQube API"
+	exit 1
+end

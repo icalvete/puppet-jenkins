@@ -1,0 +1,61 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+require "rubygems"
+require "net/http"
+require "net/https"
+require "uri"
+require "timeout"
+require "json"
+
+class SonarClient
+
+  def initialize (
+    scheme     = 'http',
+    host       = '<%= scope.lookupvar("sonar::params::host") -%>',
+    port       = '<%= scope.lookupvar("sonar::params::port") -%>',
+    severities = 'BLOCKER,CRITICAL,MAJOR,MINOR,INFO',
+    statuses   = 'OPEN,REOPENED,CONFIRMED,RESOLVED,CLOSED',
+    pageSize   = 10
+  )
+    @scheme     = scheme
+    @host       = host
+    @port       = port
+    @severities = severities
+    @statuses   = statuses
+    @pageSize   = pageSize
+  end
+
+  def askSonar(path)
+    url          = "#{@scheme}://#{@host}:#{@port}"
+    uri          = URI.parse(url)
+    http         = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true if uri.scheme == 'https'
+    req          = Net::HTTP::Get.new(path)
+
+    #req.basic_auth(config[:user], config[:pass])
+    req['Content-Type'] = 'application/json'
+    req['Accept']       = 'application/json'
+
+    res = ''
+    begin
+      Timeout::timeout(30) { res = JSON.parse(http.request(req).body) }
+    rescue
+      #puts 'Time out to connect SonarQube API.'
+      return false
+    end
+
+    return res
+  end
+
+  def getIssues(project)
+    path = URI.escape("/api/issues/search?componentRoots=#{project}&severities=#{@severities}&statuses=#{@statuses}&pageSize=#{@pageSize}")
+    res = askSonar(path)
+
+    if res
+	    return res['issues']
+    else
+	    return false
+    end
+  end
+end

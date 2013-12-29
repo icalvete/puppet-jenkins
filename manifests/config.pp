@@ -38,13 +38,7 @@ class jenkins::config {
   if $jenkins::sonar {
     include sonar::params
 
-    file {"${config_path}/sonar":
-        ensure  => directory,
-        owner   => $jenkins::params::user,
-        group   => $jenkins::params::group,
-    }
-
-    file{'sonar_runner_configuration':
+    file{'jenkins_sonar_runner_configuration':
       ensure  => present,
       content => template("${module_name}/hudson.plugins.sonar.SonarRunnerInstallation.xml.erb"),
       path    => "${jenkins::params::config_path}/hudson.plugins.sonar.SonarRunnerInstallation.xml",
@@ -53,7 +47,7 @@ class jenkins::config {
       mode    => '0644',
     }
 
-    file{'sonar_configuration':
+    file{'jenkins_sonar_configuration':
       ensure  => present,
       content => template("${module_name}/hudson.plugins.sonar.SonarPublisher.xml.erb"),
       path    => "${jenkins::params::config_path}/hudson.plugins.sonar.SonarPublisher.xml",
@@ -61,6 +55,32 @@ class jenkins::config {
       group   => $jenkins::params::group,
       mode    => '0644',
     }
+
+    file {"${jenkins::params::config_path}/sonar":
+        ensure  => directory,
+        owner   => $jenkins::params::user,
+        group   => $jenkins::params::group,
+    }
+
+    file{'jenkins_sonar_check':
+      ensure  => present,
+      content => template("${module_name}/sonar_check.rb.erb"),
+      path    => "${jenkins::params::config_path}/sonar/sonar_check.rb",
+      owner   => $jenkins::params::user,
+      group   => $jenkins::params::group,
+      mode    => '0700',
+
+    }
+
+    file{'jenkins_sonar_check_lib':
+      ensure  => present,
+      content => template("${module_name}/sonarclient.rb.erb"),
+      path    => "${jenkins::params::config_path}/sonar/sonarclient.rb",
+      owner   => $jenkins::params::user,
+      group   => $jenkins::params::group,
+      mode    => '0600',
+    }
+
   }
 
   if $cluster {
