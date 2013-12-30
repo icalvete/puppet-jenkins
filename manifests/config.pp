@@ -98,4 +98,15 @@ class jenkins::config {
       require => Exec['create-jenkins-cluster-initd'],
     }
   }
+
+  if $jenkins::ssl {
+    file {'jenkins_keystore':
+      ensure => present,
+      source => "puppet:///modules/sp/jenkins_keys/keystore",
+      path   => "${jenkins::params::config_path}/.keystore",
+      owner  => $jenkins::params::user,
+      group  => $jenkins::params::group,
+      mode   => '0644',
+    }
+  }
 }

@@ -38,7 +38,7 @@ JENKINS_LOG=/var/log/jenkins/$NAME.log
 MAXOPENFILES=8192
 
 # port for HTTP connector (default 8080; disable with -1)
-HTTP_PORT=8080
+HTTP_PORT=<%= scope.lookupvar('jenkins::params::port') %>
 
 # port for AJP connector (disabled by default)
 AJP_PORT=-1
@@ -56,4 +56,8 @@ PREFIX=/jenkins
 # --webroot=~/.jenkins/war
 # --prefix=$PREFIX
 
+<% if @ssl -%>
+JENKINS_ARGS="--webroot=/var/cache/jenkins/war --httpPort=$HTTP_PORT --ajp13Port=$AJP_PORT --argumentsRealm.passwd.<%= scope.lookupvar('jenkins::params::admin_user') -%>=<%= scope.lookupvar('jenkins::params::admin_pass') -%> --argumentsRealm.roles.<%= scope.lookupvar('jenkins::params::admin_user') -%>=admin --httpsPort=<%= scope.lookupvar('jenkins::params::sport') -%> --httpsKeyStorePassword=<%= scope.lookupvar('jenkins::params::skey') -%>"
+<% else -%>
 JENKINS_ARGS="--webroot=/var/cache/jenkins/war --httpPort=$HTTP_PORT --ajp13Port=$AJP_PORT --argumentsRealm.passwd.<%= scope.lookupvar('jenkins::params::admin_user') -%>=<%= scope.lookupvar('jenkins::params::admin_pass') -%> --argumentsRealm.roles.<%= scope.lookupvar('jenkins::params::admin_user') -%>=admin"
+<% end -%>

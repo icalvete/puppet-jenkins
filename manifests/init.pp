@@ -14,6 +14,7 @@ class jenkins (
   $ldap_suffix     = $jenkins::params::ldap_suffix,
   $ldap_admin_user = $jenkins::params::ldap_admin_user,
   $ldap_admin_pass = $jenkins::params::ldap_admin_pass,
+  $ssl             = false,
   $sonar           = false
 
 ) inherits jenkins::params {

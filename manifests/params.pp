@@ -1,13 +1,16 @@
 class jenkins::params {
 
-  $repo_scheme   = 'http'
-  $repo_domain   = 'pkg.jenkins-ci.org'
-  $repo_port     = false
-  $repo_user     = false
-  $repo_pass     = false
-  $repo_path     = 'deb'
-  $repo_resource = 'jenkins_1.544_all.deb'
+  $repo_scheme            = 'http'
+  $repo_domain            = 'pkg.jenkins-ci.org'
+  $repo_port              = false
+  $repo_user              = false
+  $repo_pass              = false
+  $repo_path              = 'deb'
+  $repo_resource          = 'jenkins_1.544_all.deb'
 
+  $port                   = hiera('jenkins_port')
+  $sport                  = hiera('jenkins_sport')
+  $skey                   = hiera('jenkins_skey')
   $admin_user             = hiera('jenkins_admin_user')
   $admin_pass             = hiera('jenkins_admin_pass')
   $plugins                = hiera('jenkins_plugins')
@@ -18,10 +21,10 @@ class jenkins::params {
   $plugin_parent_dir      = '/var/lib/jenkins'
   $plugin_dir             = '/var/lib/jenkins/plugins'
 
-  $ldap_host       = hiera('ldap_host')
-  $ldap_suffix     = hiera('ldap_suffix')
-  $ldap_admin_user = hiera('ldap_admin_user')
-  $ldap_admin_pass = hiera('ldap_admin_pass')
+  $ldap_host              = hiera('ldap_host')
+  $ldap_suffix            = hiera('ldap_suffix')
+  $ldap_admin_user        = hiera('ldap_admin_user')
+  $ldap_admin_pass        = hiera('ldap_admin_pass')
 
   case $::operatingsystem {
     /^(Debian|Ubuntu)$/: {
