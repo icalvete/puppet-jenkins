@@ -8,6 +8,7 @@ class jenkins::plugins {
   @jenkins::plugin { 'analysis-core': }
   @jenkins::plugin { 'sonar': }
   @jenkins::plugin { 'greenballs': }
+  @jenkins::plugin { 'postbuild-task': }
 
   if $jenkins::plugins != []{
     realize(Jenkins::Plugin[$jenkins::plugins])
