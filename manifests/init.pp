@@ -6,7 +6,7 @@ class jenkins (
   $repo_user       = $jenkins::params::repo_user,
   $repo_pass       = $jenkins::params::repo_pass,
   $repo_path       = $jenkins::params::repo_path,
-  $repo_resource   = $jenkins::params::package,
+  $repo_resource   = $jenkins::params::repo_resource,
   $cluster         = false,
   $plugins         = $jenkins::params::plugins,
   $ldap            = false,
@@ -15,6 +15,7 @@ class jenkins (
   $ldap_admin_user = $jenkins::params::ldap_admin_user,
   $ldap_admin_pass = $jenkins::params::ldap_admin_pass,
   $ssl             = false,
+  $keystore        = $jenkins::params::keystore,
   $sonar           = false
 
 ) inherits jenkins::params {

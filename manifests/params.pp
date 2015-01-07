@@ -5,8 +5,8 @@ class jenkins::params {
   $repo_port              = false
   $repo_user              = false
   $repo_pass              = false
-  $repo_path              = 'deb'
-  $repo_resource          = 'jenkins_1.544_all.deb'
+  $repo_path              = 'debian/binary'
+  $repo_resource          = 'jenkins_1.596_all.deb'
 
   $port                   = hiera('jenkins_port')
   $sport                  = hiera('jenkins_sport')
@@ -20,6 +20,7 @@ class jenkins::params {
   $user                   = 'jenkins'
   $plugin_parent_dir      = '/var/lib/jenkins'
   $plugin_dir             = '/var/lib/jenkins/plugins'
+  $keystore               = 'puppet:///modules/sp/jenkins_keys/keystore'
 
   $ldap_host              = hiera('ldap_host')
   $ldap_suffix            = hiera('ldap_suffix')
