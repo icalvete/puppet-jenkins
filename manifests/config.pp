@@ -102,7 +102,7 @@ class jenkins::config {
   if $jenkins::ssl {
     file {'jenkins_keystore':
       ensure => present,
-      source => "puppet:///modules/sp/jenkins_keys/keystore",
+      source => $jenkins::keystore,
       path   => "${jenkins::params::config_path}/.keystore",
       owner  => $jenkins::params::user,
       group  => $jenkins::params::group,
