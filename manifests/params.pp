@@ -6,7 +6,7 @@ class jenkins::params {
   $repo_user              = false
   $repo_pass              = false
   $repo_path              = 'deb'
-  $repo_resource          = 'jenkins_1.544_all.deb'
+  $repo_resource          = 'jenkins_1.602_all.deb'
 
   $port                   = hiera('jenkins_port')
   $sport                  = hiera('jenkins_sport')
