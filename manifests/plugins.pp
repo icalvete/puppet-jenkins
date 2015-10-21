@@ -12,6 +12,8 @@ class jenkins::plugins {
   @jenkins::plugin { 'xunit': }
   @jenkins::plugin { 'junit': }
   @jenkins::plugin { 'ansicolor': }
+  @jenkins::plugin { 'parameterized-trigger': }
+  @jenkins::plugin { 'any-buildstep': }
 
   if $jenkins::plugins != []{
     realize(Jenkins::Plugin[$jenkins::plugins])
