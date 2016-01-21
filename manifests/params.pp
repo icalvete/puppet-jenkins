@@ -22,10 +22,12 @@ class jenkins::params {
   $plugin_dir             = '/var/lib/jenkins/plugins'
   $keystore               = 'puppet:///modules/sp/jenkins_keys/keystore'
 
-  $ldap_host              = hiera('ldap_host')
-  $ldap_suffix            = hiera('ldap_suffix')
-  $ldap_admin_user        = hiera('ldap_admin_user')
-  $ldap_admin_pass        = hiera('ldap_admin_pass')
+  if $jenkins::ldap {
+    $ldap_host              = hiera('ldap_host')
+    $ldap_suffix            = hiera('ldap_suffix')
+    $ldap_admin_user        = hiera('ldap_admin_user')
+    $ldap_admin_pass        = hiera('ldap_admin_pass')
+  }
 
   case $::operatingsystem {
     /^(Debian|Ubuntu)$/: {

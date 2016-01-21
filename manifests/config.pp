@@ -35,6 +35,14 @@ class jenkins::config {
     mode    => '0644',
   }
 
+  file { 'ssh_directory_jenkins':
+    ensure => directory,
+    path   => "${jenkins::params::config_path}/.ssh",
+    owner  => $jenkins::params::user,
+    group  => $jenkins::params::group,
+    mode   => '0700',
+  }
+
   if $jenkins::sonar {
     include sonar::params
 
