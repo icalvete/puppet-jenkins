@@ -6,33 +6,55 @@ class jenkins::params {
   $repo_user              = false
   $repo_pass              = false
   $repo_path              = 'debian/binary'
-  $repo_resource          = 'jenkins_1.602_all.deb'
+  $repo_resource          = 'jenkins_1.658_all.deb'
 
-  $port                   = hiera('jenkins_port')
-  $sport                  = hiera('jenkins_sport')
-  $skey                   = hiera('jenkins_skey')
-  $admin_user             = hiera('jenkins_admin_user')
-  $admin_pass             = hiera('jenkins_admin_pass')
-  $plugins                = hiera('jenkins_plugins')
-  $prepare_cluster_backup = '/root/jenkins.tar'
+  $jenkins_plugins = [
+   'scm-api', 
+   'git-client',
+   'git',
+   'htmlpublisher',
+   'analysis-core',
+   'greenballs',
+   'postbuild-task',
+   'xunit',
+   'junit',
+   'warnings',
+   'join',
+   'sonar',
+   'jquery',
+   'ansicolor',
+   'parameterized-trigger',
+   'token-macro',
+   'run-condition',
+   'conditional-buildstep',
+   'flexible-publish',
+   'any-buildstep'
+  ]
+
+  $port                   = hiera('jenkins_port', '8008')
+  $sport                  = hiera('jenkins_sport', '8084')
+  $admin_user             = hiera('jenkins_admin_user', 'jenkins')
+  $admin_pass             = hiera('jenkins_admin_pass', 'changeme')
+  $plugins                = hiera('jenkins_plugins', $jenkins_plugins)
   $service                = 'jenkins'
   $config_path            = '/var/lib/jenkins'
   $user                   = 'jenkins'
   $plugin_parent_dir      = '/var/lib/jenkins'
   $plugin_dir             = '/var/lib/jenkins/plugins'
-  $keystore               = 'puppet:///modules/sp/jenkins_keys/keystore'
+  $skey                   = hiera('jenkins_skey', 'j3nk1nsk3y')
+  $keystore               = "puppet:///modules/${module_name}/keystore"
 
   if $jenkins::ldap {
-    $ldap_host              = hiera('ldap_host')
-    $ldap_suffix            = hiera('ldap_suffix')
-    $ldap_admin_user        = hiera('ldap_admin_user')
-    $ldap_admin_pass        = hiera('ldap_admin_pass')
+    $ldap_host              = hiera('ldap_host', 'localhost')
+    $ldap_suffix            = hiera('ldap_suffix', 'dc=example,dc=net')
+    $ldap_admin_user        = hiera('ldap_admin_user', 'cn=Directory Manager')
+    $ldap_admin_pass        = hiera('ldap_admin_pass', 'changeme')
   }
 
   case $::operatingsystem {
     /^(Debian|Ubuntu)$/: {
       $installer            = '/usr/bin/dpkg'
-      $group                = 'nogroup'
+      $group                = 'jenkins'
       $pre_package          = ['openjdk-7-jre', 'daemon']
       $config_file_defaults = '/etc/default/jenkins'
     }

@@ -7,18 +7,24 @@ class jenkins (
   $repo_pass       = $jenkins::params::repo_pass,
   $repo_path       = $jenkins::params::repo_path,
   $repo_resource   = $jenkins::params::repo_resource,
-  $cluster         = false,
-  $plugins         = $jenkins::params::plugins,
+  $admin_user      = $jenkins::params::admin_user,
+  $admin_pass      = $jenkins::params::admin_user,
+  $plugins         = undef,
   $ldap            = false,
   $ldap_host       = $jenkins::params::ldap_host,
   $ldap_suffix     = $jenkins::params::ldap_suffix,
   $ldap_admin_user = $jenkins::params::ldap_admin_user,
   $ldap_admin_pass = $jenkins::params::ldap_admin_pass,
   $ssl             = false,
+  $skey            = $jenkins::params::skey,
   $keystore        = $jenkins::params::keystore,
   $sonar           = false
 
 ) inherits jenkins::params {
+
+  if ! $repo_resource {
+    fail('repo_resource parameter must be defined')
+  }
 
   anchor{'jenkins::begin':
     before  => Class['jenkins::install']
@@ -38,12 +44,6 @@ class jenkins (
     require  => Class['jenkins::plugins']
   }
 
-  if $cluster {
-    class {'jenkins::prepare_cluster':
-      require => Class['jenkins::service'],
-      before  => Anchor['jenkins::end']
-    }
-  }
   anchor{'jenkins::end':
     require => Class['jenkins::service']
   }

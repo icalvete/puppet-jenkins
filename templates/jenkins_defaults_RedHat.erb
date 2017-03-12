@@ -43,7 +43,7 @@ JENKINS_JAVA_OPTIONS="-Djava.awt.headless=true"
 # Port Jenkins is listening on.
 # Set to -1 to disable
 #
-JENKINS_PORT="<%= scope.lookupvar('jenkins::params::port') -%>"
+JENKINS_PORT="<%= scope.lookupvar('jenkins::port') -%>"
 
 ## Type:        string
 ## Default:     ""
@@ -131,7 +131,7 @@ JENKINS_HANDLER_IDLE="20"
 # Full option list: java -jar jenkins.war --help
 #
 <% if @ssl -%>
-JENKINS_ARGS="--argumentsRealm.passwd.<%= scope.lookupvar('jenkins::params::admin_user') -%>=<%= scope.lookupvar('jenkins::params::admin_pass') -%> --argumentsRealm.roles.<%= scope.lookupvar('jenkins::params::admin_user') -%>=admin  --httpsPort=<%= scope.lookupvar('jenkins::params::sport') -%> --httpsKeyStorePassword=<%= scope.lookupvar('jenkins::params::skey') -%>"
+JENKINS_ARGS="--argumentsRealm.passwd.<%= scope.lookupvar('jenkins::admin_user') -%>=<%= scope.lookupvar('jenkins::admin_pass') -%> --argumentsRealm.roles.<%= scope.lookupvar('jenkins::admin_user') -%>=admin  --httpsPort=<%= scope.lookupvar('jenkins::sport') -%> --httpsKeyStorePassword=<%= scope.lookupvar('jenkins::skey') -%>"
 <% else -%>
-JENKINS_ARGS="--argumentsRealm.passwd.<%= scope.lookupvar('jenkins::params::admin_user') -%>=<%= scope.lookupvar('jenkins::params::admin_pass') -%> --argumentsRealm.roles.<%= scope.lookupvar('jenkins::params::admin_user') -%>=admin"
+JENKINS_ARGS="--argumentsRealm.passwd.<%= scope.lookupvar('jenkins::admin_user') -%>=<%= scope.lookupvar('jenkins::admin_pass') -%> --argumentsRealm.roles.<%= scope.lookupvar('jenkins::admin_user') -%>=admin"
 <% end -%>
