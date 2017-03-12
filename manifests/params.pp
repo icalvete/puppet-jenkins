@@ -9,7 +9,7 @@ class jenkins::params {
   $repo_resource          = 'jenkins_1.658_all.deb'
 
   $jenkins_plugins = [
-   'scm-api', 
+   'scm-api',
    'git-client',
    'git',
    'htmlpublisher',
