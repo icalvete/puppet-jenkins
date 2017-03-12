@@ -9,26 +9,26 @@ class jenkins::params {
   $repo_resource          = 'jenkins_1.658_all.deb'
 
   $jenkins_plugins = [
-   'scm-api',
-   'git-client',
-   'git',
-   'htmlpublisher',
-   'analysis-core',
-   'greenballs',
-   'postbuild-task',
-   'xunit',
-   'junit',
-   'warnings',
-   'join',
-   'sonar',
-   'jquery',
-   'ansicolor',
-   'parameterized-trigger',
-   'token-macro',
-   'run-condition',
-   'conditional-buildstep',
-   'flexible-publish',
-   'any-buildstep'
+    'scm-api',
+    'git-client',
+    'git',
+    'htmlpublisher',
+    'analysis-core',
+    'greenballs',
+    'postbuild-task',
+    'xunit',
+    'junit',
+    'warnings',
+    'join',
+    'sonar',
+    'jquery',
+    'ansicolor',
+    'parameterized-trigger',
+    'token-macro',
+    'run-condition',
+    'conditional-buildstep',
+    'flexible-publish',
+    'any-buildstep'
   ]
 
   $port                   = hiera('jenkins_port', '8008')
