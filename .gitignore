@@ -1,0 +1,4 @@
+files/tools/*crt
+files/tools/*key
+files/tools/*p12
+files/tools/*jks
