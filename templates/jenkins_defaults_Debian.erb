@@ -72,7 +72,7 @@ PREFIX=/$NAME
 # --webroot=~/.jenkins/war
 # --prefix=$PREFIX
 
-<% if @ssl -%>
+<% if scope.lookupvar('jenkins::ssl') -%>
   JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --ajp13Port=$AJP_PORT --argumentsRealm.passwd.<%= scope.lookupvar('jenkins::admin_user') -%>=<%= scope.lookupvar('jenkins::admin_pass') -%> --argumentsRealm.roles.<%= scope.lookupvar('jenkins::admin_user') -%>=admin --httpsPort=<%= scope.lookupvar('jenkins::sport') -%> --httpsKeyStore=<%= scope.lookupvar('jenkins::params::config_path') -%>/.keystore --httpsKeyStorePassword=<%= scope.lookupvar('jenkins::skey') -%>"
 <% else -%>
 JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --ajp13Port=$AJP_PORT --argumentsRealm.passwd.<%= scope.lookupvar('jenkins::admin_user') -%>=<%= scope.lookupvar('jenkins::admin_pass') -%> --argumentsRealm.roles.<%= scope.lookupvar('jenkins::admin_user') -%>=admin"
