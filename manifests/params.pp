@@ -44,12 +44,10 @@ class jenkins::params {
   $skey                   = hiera('jenkins_skey', 'j3nk1nsk3y')
   $keystore               = "puppet:///modules/${module_name}/keystore"
 
-  if $jenkins::ldap {
-    $ldap_host              = hiera('ldap_host', 'localhost')
-    $ldap_suffix            = hiera('ldap_suffix', 'dc=example,dc=net')
-    $ldap_admin_user        = hiera('ldap_admin_user', 'cn=Directory Manager')
-    $ldap_admin_pass        = hiera('ldap_admin_pass', 'changeme')
-  }
+  $ldap_host              = hiera('ldap_host', 'localhost')
+  $ldap_suffix            = hiera('ldap_suffix', 'dc=example,dc=net')
+  $ldap_admin_user        = hiera('ldap_admin_user', 'cn=Directory Manager')
+  $ldap_admin_pass        = hiera('ldap_admin_pass', 'changeme')
 
   case $::operatingsystem {
     /^(Debian|Ubuntu)$/: {
